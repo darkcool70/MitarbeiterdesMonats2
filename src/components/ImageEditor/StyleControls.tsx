@@ -1,4 +1,4 @@
-import { FONTS, TEXT_SIZES, TEXT_COLORS, TextStyle } from '../../types';
+import { FONTS, TEXT_SIZES, TEXT_COLORS, TextStyle } from "../../types";
 
 interface StyleControlsProps {
   titleStyle: TextStyle;
@@ -10,41 +10,50 @@ interface StyleControlsProps {
 }
 
 const FONT_OPTIONS = [
-  { label: 'Open Sans', value: "'Open Sans', serif" },
-  { label: 'Lato', value: "'Lato', serif" },
-  { label: 'Helvetica Neue', value: "'Helvetica Neue', serif" },
-  { label: 'Garamond', value: "'Garamond', serif" },
-  { label: 'Georgia', value: "'Georgia', serif" },
-  { label: 'Harry P', value: "'Harry P', serif" },
-  { label: 'Montserrat', value: "'Montserrat', sans-serif" },
+  { label: "Open Sans", value: "'Open Sans', serif" },
+  { label: "Lato", value: "'Lato', serif" },
+  { label: "Helvetica Neue", value: "'Helvetica Neue', serif" },
+  { label: "Garamond", value: "'Garamond', serif" },
+  { label: "Georgia", value: "'Georgia', serif" },
+  { label: "Harry P", value: "'Harry P', serif" },
+  { label: "Montserrat", value: "'Montserrat', sans-serif" },
 ];
 
-
-
 const SIZE_OPTIONS = [
-  { label: 'Klein', value: 24 },
-  { label: 'Mittel', value: 36 },
-  { label: 'Groß', value: 48 },
+  { label: "Klein", value: 24 },
+  { label: "Mittel", value: 36 },
+  { label: "Groß", value: 48 },
 ];
 
 const COLOR_OPTIONS = [
-  { label: 'Weiß', value: '#FFFFFF' },
-  { label: 'Gold', value: '#FFD700' },
-  { label: 'Silber', value: '#C0C0C0' },
-  { label: 'Marineblau', value: '#0f2027' },
-  { label: 'Burgunderrot', value: '#800020' },
-  { label: 'Benutzerdefiniert', value: 'custom' },
+  { label: "Weiß", value: "#FFFFFF" },
+  { label: "Gold", value: "#FFD700" },
+  { label: "Silber", value: "#C0C0C0" },
+  { label: "Marineblau", value: "#0f2027" },
+  { label: "Burgunderrot", value: "#800020" },
+  { label: "Benutzerdefiniert", value: "custom" },
 ];
 
-
 function parseRGBA(rgbaStr: string) {
-  const result = /rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d\.]+)?\)/.exec(rgbaStr);
+  const result = /rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d\.]+)?\)/.exec(
+    rgbaStr
+  );
   if (!result) return null;
-  const [_, r, g, b, a = '1'] = result;
+  const [_, r, g, b, a = "1"] = result;
   return { r: parseInt(r), g: parseInt(g), b: parseInt(b), a: parseFloat(a) };
 }
 
-function buildRGBA({ r, g, b, a }: { r: number; g: number; b: number; a: number }) {
+function buildRGBA({
+  r,
+  g,
+  b,
+  a,
+}: {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}) {
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
@@ -64,7 +73,9 @@ export default function StyleControls({
       <div>
         <h3 className="text-lg font-medium text-gray-900 mb-4">Banner-Stil</h3>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Farbe</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Farbe
+          </label>
           <input
             type="color"
             value={`#${((1 << 24) + (rgba.r << 16) + (rgba.g << 8) + rgba.b)
@@ -82,7 +93,9 @@ export default function StyleControls({
           />
         </div>
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">Transparenz</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Transparenz
+          </label>
           <input
             type="range"
             min="0"
@@ -103,10 +116,14 @@ export default function StyleControls({
         <h3 className="text-lg font-medium text-gray-900 mb-4">Titel-Stil</h3>
         {/* Schriftart */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Schriftart</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Schriftart
+          </label>
           <select
             value={titleStyle.font}
-            onChange={(e) => onTitleStyleChange({ ...titleStyle, font: e.target.value })}
+            onChange={(e) =>
+              onTitleStyleChange({ ...titleStyle, font: e.target.value })
+            }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           >
             {FONT_OPTIONS.map((font) => (
@@ -118,11 +135,16 @@ export default function StyleControls({
         </div>
         {/* Schriftgröße */}
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">Schriftgröße</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Schriftgröße
+          </label>
           <select
             value={titleStyle.size}
             onChange={(e) =>
-              onTitleStyleChange({ ...titleStyle, size: parseInt(e.target.value) })
+              onTitleStyleChange({
+                ...titleStyle,
+                size: parseInt(e.target.value),
+              })
             }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           >
@@ -133,14 +155,17 @@ export default function StyleControls({
             ))}
             <option value="custom">Benutzerdefiniert</option>
           </select>
-          {titleStyle.size === 'custom' && (
+          {titleStyle.size === "custom" && (
             <input
               type="number"
               min="10"
               max="100"
               value={titleStyle.size}
               onChange={(e) =>
-                onTitleStyleChange({ ...titleStyle, size: parseInt(e.target.value) })
+                onTitleStyleChange({
+                  ...titleStyle,
+                  size: parseInt(e.target.value),
+                })
               }
               className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
@@ -148,11 +173,13 @@ export default function StyleControls({
         </div>
         {/* Schriftfarbe */}
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">Schriftfarbe</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Schriftfarbe
+          </label>
           <select
-            value={TEXT_COLORS[titleStyle.color] ? titleStyle.color : 'custom'}
+            value={TEXT_COLORS[titleStyle.color] ? titleStyle.color : "custom"}
             onChange={(e) => {
-              if (e.target.value === 'custom') {
+              if (e.target.value === "custom") {
                 // Nichts tun, bis der Benutzer eine Farbe auswählt
               } else {
                 onTitleStyleChange({ ...titleStyle, color: e.target.value });
@@ -166,7 +193,8 @@ export default function StyleControls({
               </option>
             ))}
           </select>
-          {(!TEXT_COLORS[titleStyle.color] || titleStyle.color === 'custom') && (
+          {(!TEXT_COLORS[titleStyle.color] ||
+            titleStyle.color === "custom") && (
             <input
               type="color"
               value={titleStyle.color}
@@ -185,10 +213,14 @@ export default function StyleControls({
         {/* Wiederholen Sie die gleichen Steuerungselemente wie für den Titel */}
         {/* Schriftart */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Schriftart</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Schriftart
+          </label>
           <select
             value={nameStyle.font}
-            onChange={(e) => onNameStyleChange({ ...nameStyle, font: e.target.value })}
+            onChange={(e) =>
+              onNameStyleChange({ ...nameStyle, font: e.target.value })
+            }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           >
             {FONT_OPTIONS.map((font) => (
@@ -200,11 +232,16 @@ export default function StyleControls({
         </div>
         {/* Schriftgröße */}
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">Schriftgröße</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Schriftgröße
+          </label>
           <select
             value={nameStyle.size}
             onChange={(e) =>
-              onNameStyleChange({ ...nameStyle, size: parseInt(e.target.value) })
+              onNameStyleChange({
+                ...nameStyle,
+                size: parseInt(e.target.value),
+              })
             }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           >
@@ -213,16 +250,19 @@ export default function StyleControls({
                 {size.label}
               </option>
             ))}
-            <option value="custom">Benutzerdefiniert</option>
+            {/* <option value="custom">Benutzerdefiniert</option> */}
           </select>
-          {nameStyle.size === 'custom' && (
+          {nameStyle.size === "custom" && (
             <input
               type="number"
               min="10"
               max="100"
               value={nameStyle.size}
               onChange={(e) =>
-                onNameStyleChange({ ...nameStyle, size: parseInt(e.target.value) })
+                onNameStyleChange({
+                  ...nameStyle,
+                  size: parseInt(e.target.value),
+                })
               }
               className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
@@ -230,11 +270,13 @@ export default function StyleControls({
         </div>
         {/* Schriftfarbe */}
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">Schriftfarbe</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Schriftfarbe
+          </label>
           <select
-            value={TEXT_COLORS[nameStyle.color] ? nameStyle.color : 'custom'}
+            value={TEXT_COLORS[nameStyle.color] ? nameStyle.color : "custom"}
             onChange={(e) => {
-              if (e.target.value === 'custom') {
+              if (e.target.value === "custom") {
                 // Nichts tun, bis der Benutzer eine Farbe auswählt
               } else {
                 onNameStyleChange({ ...nameStyle, color: e.target.value });
@@ -248,7 +290,7 @@ export default function StyleControls({
               </option>
             ))}
           </select>
-          {(!TEXT_COLORS[nameStyle.color] || nameStyle.color === 'custom') && (
+          {(!TEXT_COLORS[nameStyle.color] || nameStyle.color === "custom") && (
             <input
               type="color"
               value={nameStyle.color}
